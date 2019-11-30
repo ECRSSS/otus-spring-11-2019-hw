@@ -6,20 +6,29 @@ import model.itemsPart.Question;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class CsvLoadServiceImpl implements TestItemsLoadService {
+
+
+    public void setCsvData(Resource csvData) {
+        this.csvData = csvData;
+    }
+
+    private Resource csvData;
+
 
     @Override
     public List<TestItem> load() throws IOException {
-        File csvData = new File("/home/nik/IdeaProjects/studentsTesting/src/main/resources/testItems.csv");
-        CSVParser csvParser = CSVFormat.EXCEL.withHeader().parse(new InputStreamReader(new FileInputStream(csvData)));
+        CSVParser csvParser = CSVFormat.EXCEL.withHeader().parse(new InputStreamReader(new FileInputStream(csvData.getFile())));
         List<TestItem> testItems = new ArrayList<>();
         for (CSVRecord record : csvParser) {
             Question question = new Question(record.get("question"));

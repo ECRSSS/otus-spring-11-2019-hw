@@ -1,12 +1,15 @@
 package serviceAskQuestions;
 
 import model.TestItem;
+import org.springframework.stereotype.Service;
 import util.Bank;
 
 import java.util.List;
 import java.util.Scanner;
 
+@Service
 public class ServiceAskImpl implements ServiceAsk {
+
 
     public void start(List<TestItem> items) {
         Scanner in = Bank.scanner;
