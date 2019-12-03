@@ -1,12 +1,18 @@
-import serviceLoadQuestions.CsvLoadServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import serviceLoadQuestions.TestItemsLoadService;
 
 import java.io.IOException;
 
-public class LoaderTests {
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class LoaderTests extends AbstractTestClass {
+
+    @Autowired
+    TestItemsLoadService loadService;
 
     @org.junit.Test
-    public void laodTEst() throws IOException {
-        new CsvLoadServiceImpl().load();
+    public void loadItemsTest() throws IOException {
+        assertThat(loadService.load().size()).isEqualTo(2);
     }
 
 }
