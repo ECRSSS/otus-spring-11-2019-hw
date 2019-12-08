@@ -11,7 +11,7 @@ public class LoaderTests extends AbstractTestClass {
     TestItemsLoadService loadService;
 
     @org.junit.Test
-    public void loadItemsTest() throws IOException {
+    public void loadTests() throws IOException {
         assertThat(loadService.load().size()).isEqualTo(2);
     }
 
