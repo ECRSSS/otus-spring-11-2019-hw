@@ -1,5 +1,6 @@
 package serviceAskQuestions;
 
+import localizationService.LocalizationService;
 import model.TestItem;
 import org.springframework.stereotype.Service;
 import serviceLoadQuestions.TestItemsLoadService;
@@ -14,17 +15,20 @@ public class ServiceAskImpl implements ServiceAsk {
 
     private List<TestItem> items;
 
+    private LocalizationService localizationService;
+
     private void setItems(List<TestItem> items) {
         this.items = items;
     }
 
-    public ServiceAskImpl(TestItemsLoadService loadService) throws IOException {
+    public ServiceAskImpl(TestItemsLoadService loadService, LocalizationService localizationService) throws IOException {
         setItems(loadService.load());
+        this.localizationService = localizationService;
     }
 
     public void start() {
         Scanner in = Bank.scanner;
-        System.out.println("Введите фамилию:");
+        System.out.println(localizationService.getMessage("messages.hello"));
         String lastName = in.nextLine();
         System.out.println("Введите имя:");
         String firstName = in.nextLine();

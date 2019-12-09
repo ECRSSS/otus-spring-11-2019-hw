@@ -1,7 +1,9 @@
 import localizationService.LocalizationService;
 import localizationService.LocalizationServiceImpl;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import serviceAskQuestions.ServiceAsk;
 import serviceAskQuestions.ServiceAskImpl;
@@ -10,15 +12,11 @@ import serviceLoadQuestions.TestItemsLoadService;
 
 import java.io.IOException;
 
-@ComponentScan
-@PropertySource("classpath:prop.properties")
-@Configuration
-public class Main {
 
-    public static void main(String[] args) throws IOException {
-        AnnotationConfigApplicationContext configApplicationContext = new AnnotationConfigApplicationContext(Main.class);
-        configApplicationContext.getBean(ServiceAsk.class).start();
-    }
+@Configuration
+@PropertySource("classpath:prop.properties")
+public class TestConfiguration {
+
 
     @Bean
     public MessageSource messageSource() {
@@ -29,18 +27,20 @@ public class Main {
     }
 
     @Bean
+    public LocalizationService localizationService(MessageSource messageSource) {
+        return new LocalizationServiceImpl(messageSource);
+    }
+
+    @Bean
     public TestItemsLoadService loadService() {
         return new CsvLoadServiceImpl();
     }
 
-    @Bean
-    public LocalizationService localizationService(MessageSource messageSource) {
-        return new LocalizationServiceImpl(messageSource);
-    }
 
     @Bean
     public ServiceAsk serviceAsk(TestItemsLoadService testItemsLoadService, LocalizationService localizationService) throws IOException {
         testItemsLoadService.load();
         return new ServiceAskImpl(testItemsLoadService, localizationService);
     }
+
 }
