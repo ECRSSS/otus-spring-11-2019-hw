@@ -1,4 +1,4 @@
-package serviceAskQuestions;
+package students.serviceAskQuestions;
 
 public interface ServiceAsk {
 

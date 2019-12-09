@@ -1,12 +1,14 @@
-import localizationService.LocalizationService;
-import localizationService.LocalizationServiceImpl;
+package students;
+
+import students.localizationService.LocalizationService;
+import students.localizationService.LocalizationServiceImpl;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import serviceAskQuestions.ServiceAsk;
-import serviceAskQuestions.ServiceAskImpl;
-import serviceLoadQuestions.CsvLoadServiceImpl;
-import serviceLoadQuestions.TestItemsLoadService;
+import students.serviceAskQuestions.ServiceAsk;
+import students.serviceAskQuestions.ServiceAskImpl;
+import students.serviceLoadQuestions.CsvLoadServiceImpl;
+import students.serviceLoadQuestions.TestItemsLoadService;
 
 import java.io.IOException;
 
@@ -29,13 +31,13 @@ public class Main {
     }
 
     @Bean
-    public TestItemsLoadService loadService() {
-        return new CsvLoadServiceImpl();
+    public LocalizationService localizationService(MessageSource messageSource) {
+        return new LocalizationServiceImpl(messageSource);
     }
 
     @Bean
-    public LocalizationService localizationService(MessageSource messageSource) {
-        return new LocalizationServiceImpl(messageSource);
+    public TestItemsLoadService loadService(LocalizationService localizationService) {
+        return new CsvLoadServiceImpl(localizationService);
     }
 
     @Bean

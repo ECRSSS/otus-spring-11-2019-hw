@@ -1,5 +1,6 @@
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import serviceLoadQuestions.TestItemsLoadService;
+import students.serviceLoadQuestions.TestItemsLoadService;
 
 import java.io.IOException;
 
@@ -8,9 +9,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LoaderTests extends AbstractTestClass {
 
     @Autowired
-    TestItemsLoadService loadService;
+    private TestItemsLoadService loadService;
 
-    @org.junit.Test
+    @Test
     public void loadTests() throws IOException {
         assertThat(loadService.load().size()).isEqualTo(2);
     }

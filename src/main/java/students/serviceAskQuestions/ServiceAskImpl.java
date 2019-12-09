@@ -1,10 +1,10 @@
-package serviceAskQuestions;
+package students.serviceAskQuestions;
 
-import localizationService.LocalizationService;
-import model.TestItem;
+import students.localizationService.LocalizationService;
+import students.model.TestItem;
 import org.springframework.stereotype.Service;
-import serviceLoadQuestions.TestItemsLoadService;
-import util.Bank;
+import students.serviceLoadQuestions.TestItemsLoadService;
+import students.util.Bank;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,15 +28,16 @@ public class ServiceAskImpl implements ServiceAsk {
 
     public void start() {
         Scanner in = Bank.scanner;
-        System.out.println(localizationService.getMessage("messages.hello"));
+        System.out.println(localizationService.getLocalizedMessage("messages.hello"));
+
         String lastName = in.nextLine();
-        System.out.println("Введите имя:");
+        System.out.println(localizationService.getLocalizedMessage("messages.inputFirstName"));
         String firstName = in.nextLine();
         int total = items.size();
         int rightTotal = 0;
         for (TestItem item : items) {
             rightTotal = item.ask() ? rightTotal += 1 : rightTotal;
         }
-        System.out.println("Правильных ответов: " + rightTotal + "/" + total);
+        System.out.println(localizationService.getLocalizedMessage("messages.inputLastName") + rightTotal + "/" + total);
     }
 }
