@@ -10,20 +10,19 @@ import java.util.Locale;
 @Service
 public class LocalizationServiceImpl implements LocalizationService {
 
-
-    @Value("${locale}")
     private String localeTag;
 
     private MessageSource messageSource;
 
     private Locale locale;
 
-    public LocalizationServiceImpl(MessageSource messageSource) {
+    public LocalizationServiceImpl(MessageSource messageSource,@Value("${locale}") String localeTag) {
         this.messageSource = messageSource;
+        this.localeTag = localeTag;
     }
 
-    public void setLocale(Locale locale) {
-        this.locale = locale;
+    public void setLocaleTag(String localeTag) {
+        this.localeTag = localeTag;
     }
 
     @Override
@@ -35,7 +34,7 @@ public class LocalizationServiceImpl implements LocalizationService {
     @Override
     public Resource getLocalizedFile(String fileName, FileExtensionEnum fileExtensionEnum) {
         locale = Locale.forLanguageTag(localeTag);
-        return new ClassPathResource("classpath:localizedFiles/" + fileName + "_" + locale.getLanguage()
+        return new ClassPathResource("/localizedFiles/" + fileName + "_" + locale.getLanguage()
                 + "." + fileExtensionEnum.getExtensionName());
     }
 

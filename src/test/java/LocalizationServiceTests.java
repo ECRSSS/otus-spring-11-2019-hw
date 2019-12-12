@@ -16,19 +16,20 @@ public class LocalizationServiceTests extends AbstractTestClass {
 
     @Test
     public void localizationMessageEn() {
+        localizationService.setLocaleTag("en");
         assertThat(localizationService.getLocalizedMessage("messages.hello")).isEqualTo("hello");
     }
 
     @Test
     public void localizationMessageRu() {
-        localizationService.setLocale(Locale.ENGLISH);
+        localizationService.setLocaleTag("ru");
         assertThat(localizationService.getLocalizedMessage("messages.hello")).isEqualTo("привет");
     }
 
 
     @Test
     public void localizationFileEn() throws IOException {
-        localizationService.setLocale(Locale.ENGLISH);
+        localizationService.setLocaleTag("en");
         Resource file = localizationService.getLocalizedFile("testItems", FileExtensionEnum.CSV);
         assertThat(file.getFile().canRead()).isEqualTo(true);
         assertThat(file.getFile().canExecute()).isEqualTo(true);
@@ -36,6 +37,7 @@ public class LocalizationServiceTests extends AbstractTestClass {
 
     @Test
     public void localizationFileRu() throws IOException {
+        localizationService.setLocaleTag("ru");
         Resource file = localizationService.getLocalizedFile("testItems", FileExtensionEnum.CSV);
         assertThat(file.getFile().canRead()).isEqualTo(true);
         assertThat(file.getFile().canExecute()).isEqualTo(true);

@@ -1,3 +1,4 @@
+import org.springframework.beans.factory.annotation.Value;
 import students.localizationService.LocalizationService;
 import students.localizationService.LocalizationServiceImpl;
 import org.springframework.context.MessageSource;
@@ -22,14 +23,15 @@ public class TestConfiguration {
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource ms = new ReloadableResourceBundleMessageSource();
         ms.setBasename("/i18n/messages");
-        ms.setDefaultEncoding("UTF-8");
+        ms.setDefaultEncoding("windows-1251");
         return ms;
     }
 
     @Bean
-    public LocalizationService localizationService(MessageSource messageSource) {
-        return new LocalizationServiceImpl(messageSource);
+    public LocalizationService localizationService(MessageSource messageSource, @Value("${locale}")String localeTag) {
+        return new LocalizationServiceImpl(messageSource,localeTag);
     }
+
 
     @Bean
     public TestItemsLoadService loadService(LocalizationService localizationService) {
