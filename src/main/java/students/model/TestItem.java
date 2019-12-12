@@ -1,8 +1,8 @@
-package model;
+package students.model;
 
-import model.itemsPart.Answer;
-import model.itemsPart.Question;
-import util.Bank;
+import students.model.itemsPart.Answer;
+import students.model.itemsPart.Question;
+import students.util.Bank;
 
 import java.util.List;
 import java.util.stream.Stream;

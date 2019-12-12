@@ -1,4 +1,4 @@
-package model.itemsPart;
+package students.model.itemsPart;
 
 public class Answer{
         private String text;

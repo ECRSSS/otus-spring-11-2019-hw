@@ -1,12 +1,13 @@
-package serviceLoadQuestions;
+package students.serviceLoadQuestions;
 
-import model.TestItem;
-import model.itemsPart.Answer;
-import model.itemsPart.Question;
+import students.localizationService.FileExtensionEnum;
+import students.localizationService.LocalizationService;
+import students.model.TestItem;
+import students.model.itemsPart.Answer;
+import students.model.itemsPart.Question;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
@@ -18,17 +19,19 @@ import java.util.List;
 @Service
 public class CsvLoadServiceImpl implements TestItemsLoadService {
 
+    private LocalizationService localizationService;
 
-    public void setCsvData(Resource csvData) {
-        this.csvData = csvData;
+    public CsvLoadServiceImpl(LocalizationService localizationService) {
+        this.localizationService = localizationService;
     }
-
-    private Resource csvData;
-
 
     @Override
     public List<TestItem> load() throws IOException {
-        CSVParser csvParser = CSVFormat.EXCEL.withHeader().parse(new InputStreamReader(new FileInputStream(csvData.getFile())));
+        CSVParser csvParser = CSVFormat.EXCEL.withHeader().parse(
+                new InputStreamReader(new FileInputStream(
+                        localizationService
+                                .getLocalizedFile("testItems", FileExtensionEnum.CSV)
+                                .getFile())));
         List<TestItem> testItems = new ArrayList<>();
         for (CSVRecord record : csvParser) {
             Question question = new Question(record.get("question"));
